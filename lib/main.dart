@@ -88,13 +88,35 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Image.asset('assets/images/woopig.png'),
             ElevatedButton(
-              child: const Text('Goto Map'),
+              child: const Text('Go to Map'),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MapPage(title: widget.title,))
-                );
-              },
+                  MaterialPageRoute(
+                    builder: (context) { //=> MapPage(title: widget.title,))
+                      return AlertDialog(
+                        title: const Text('WARNING'),
+                        content: SingleChildScrollView(
+                          child: ListBody(
+                            children: const <Widget>[
+                              Text('While using this app, please pay attention to your surroundings and navigate safely.'),
+                            ],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => MapPage(title: widget.title,)));
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ); //push
+              }, //onPressed
             ),
           ],
         ),
