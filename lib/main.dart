@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,7 +51,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -93,13 +95,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) { //=> MapPage(title: widget.title,))
+                    builder: (context) {
+                      //=> MapPage(title: widget.title,))
                       return AlertDialog(
                         title: const Text('WARNING'),
                         content: SingleChildScrollView(
                           child: ListBody(
                             children: const <Widget>[
-                              Text('While using this app, please pay attention to your surroundings and navigate safely.'),
+                              Text(
+                                  'While using this app, please pay attention to your surroundings and navigate safely.'),
                             ],
                           ),
                         ),
@@ -108,7 +112,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: const Text('OK'),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => MapPage(title: widget.title,)));
+                                  builder: (context) => MapSample(
+                                      //title: widget.title,
+                                      )));
                             },
                           ),
                         ],
@@ -125,56 +131,45 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-// Create the stateful map page widget
-class MapPage extends StatefulWidget {
-  const MapPage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
+class MapSample extends StatefulWidget {
   @override
-  State<MapPage> createState() => _MapPageState();
+  State<MapSample> createState() => MapSampleState();
 }
 
-// Create the state for map page
-class _MapPageState extends State<MapPage> {
+class MapSampleState extends State<MapSample> {
+  Completer<GoogleMapController> _controller = Completer();
+
+  static final CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
+
+  static final CameraPosition _kLake = CameraPosition(
+      bearing: 192.8334901395799,
+      target: LatLng(37.43296265331129, -122.08832357078792),
+      tilt: 59.440717697143555,
+      zoom: 19.151926040649414);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    return new Scaffold(
+      body: GoogleMap(
+        mapType: MapType.hybrid,
+        initialCameraPosition: _kGooglePlex,
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Pretend like this is a map',
-            ),
-            Image.asset(
-                'assets/images/woopig.png'
-            ),
-          ],
-        ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _goToTheLake,
+        label: Text('To the lake!'),
+        icon: Icon(Icons.directions_boat),
       ),
     );
   }
 
+  Future<void> _goToTheLake() async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+  }
 }
