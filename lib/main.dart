@@ -143,21 +143,20 @@ class MapWindow extends StatefulWidget {
 class MapState extends State<MapWindow> {
   Completer<GoogleMapController> _controller = Completer();
 
-  static final CameraPosition _initialPos = CameraPosition(
-    target: LatLng(36.068035, -94.178929),
-    zoom: 17,
-  );
+  List<Marker> markers = [];
 
   @override
-  Widget build(BuildContext context) {
-    // Map markers for university buildings. Move this out of MapState after it works
-    Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  void initState() {
+    intilize();
+    super.initState();
+  }
 
+  intilize() {
     // Quick info dump on Markers:
     // Markers are constructed using Marker objects
     // They require a MarkerId, an object initialized by a String
     // They have a long list of contructor options: https://pub.dev/documentation/google_maps_flutter_platform_interface/latest/google_maps_flutter_platform_interface/Marker/Marker.html
-    final Marker marker = Marker(
+    Marker JBHUNTmarker = Marker(
         markerId: MarkerId("JBHT"),
         position: LatLng(36.066082, -94.173786),
         // This is where the magic happens
@@ -168,15 +167,77 @@ class MapState extends State<MapWindow> {
             builder: (BuildContext context) => buildPopupDialog(context),
           );
         });
-    markers[marker.markerId] = marker;
 
+    Marker WalkerHallmarker = Marker(
+        markerId: MarkerId("WJWH"),
+        position: LatLng(36.06535, -94.17343),
+        // This is where the magic happens
+        onTap: () {
+          showDialog(
+            // Get context from parent widget and builder is the buildpopupDialog method
+            context: context,
+            builder: (BuildContext context) => buildPopupDialog(context),
+          );
+        });
+
+    Marker MechanicalENGmarker = Marker(
+        markerId: MarkerId("MEEG"),
+        position: LatLng(36.06639, -94.17290),
+        // This is where the magic happens
+        onTap: () {
+          showDialog(
+            // Get context from parent widget and builder is the buildpopupDialog method
+            context: context,
+            builder: (BuildContext context) => buildPopupDialog(context),
+          );
+        });
+
+    Marker Physicsmarker = Marker(
+        markerId: MarkerId("PHYS"),
+        position: LatLng(36.06641, -94.17185),
+        // This is where the magic happens
+        onTap: () {
+          showDialog(
+            // Get context from parent widget and builder is the buildpopupDialog method
+            context: context,
+            builder: (BuildContext context) => buildPopupDialog(context),
+          );
+        });
+
+    Marker ChampionsHallmarker = Marker(
+        markerId: MarkerId("CHPN"),
+        position: LatLng(36.06581, -94.17135),
+        // This is where the magic happens
+        onTap: () {
+          showDialog(
+            // Get context from parent widget and builder is the buildpopupDialog method
+            context: context,
+            builder: (BuildContext context) => buildPopupDialog(context),
+          );
+        });
+
+    markers.add(JBHUNTmarker);
+    markers.add(WalkerHallmarker);
+    markers.add(MechanicalENGmarker);
+    markers.add(Physicsmarker);
+    markers.add(ChampionsHallmarker);
+    setState(() {});
+  }
+
+  static final CameraPosition _initialPos = CameraPosition(
+    target: LatLng(36.068035, -94.178929),
+    zoom: 17,
+  );
+
+  @override
+  Widget build(BuildContext context) {
     // Marker resources: https://stackoverflow.com/questions/55000043/flutter-how-to-add-marker-to-google-maps-with-new-marker-api
     return Scaffold(
         body: GoogleMap(
       myLocationButtonEnabled: false,
       zoomControlsEnabled: false,
       initialCameraPosition: _initialPos,
-      markers: Set<Marker>.of(markers.values),
+      markers: markers.map((e) => e).toSet(),
     ));
   }
 }
