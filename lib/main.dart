@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 void main() {
   runApp(const MyApp());
@@ -141,20 +142,28 @@ class MapWindow extends StatefulWidget {
 }
 
 class MapState extends State<MapWindow> {
-  Completer<GoogleMapController> _controller = Completer();
+  // Still unused, not sure what a completer / future relation is or is for here
+  late GoogleMapController _controller;
 
   List<Marker> markers = [];
+  late String _mapConfig;
 
   @override
   void initState() {
-    intilize();
+    intitalize();
     super.initState();
+
+    // Load maps config from json
+    rootBundle.loadString('mapsConfig.txt').then((string) {
+      _mapConfig = string;
+    });
   }
 
-  intilize() {
+  intitalize() {
     // Quick info dump on Markers:
     // Markers are constructed using Marker objects
     // They require a MarkerId, an object initialized by a String
+    // Marker resources: https://stackoverflow.com/questions/55000043/flutter-how-to-add-marker-to-google-maps-with-new-marker-api
     // They have a long list of contructor options: https://pub.dev/documentation/google_maps_flutter_platform_interface/latest/google_maps_flutter_platform_interface/Marker/Marker.html
     Marker JBHUNTmarker = Marker(
         markerId: MarkerId("JBHT"),
@@ -231,9 +240,11 @@ class MapState extends State<MapWindow> {
 
   @override
   Widget build(BuildContext context) {
-    // Marker resources: https://stackoverflow.com/questions/55000043/flutter-how-to-add-marker-to-google-maps-with-new-marker-api
     return Scaffold(
         body: GoogleMap(
+      onMapCreated: (GoogleMapController controller) {
+        _controller.setMapStyle(_mapConfig);
+      },
       myLocationButtonEnabled: false,
       zoomControlsEnabled: false,
       initialCameraPosition: _initialPos,
