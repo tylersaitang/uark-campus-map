@@ -159,6 +159,7 @@ class MapState extends State<MapWindow> {
     Marker JBHUNTmarker = Marker(
         markerId: MarkerId("JBHT"),
         position: LatLng(36.066082, -94.173786),
+        infoWindow: InfoWindow(title: "JB Hunt"),
         // This is where the magic happens
         onTap: () {
           showDialog(
@@ -171,6 +172,7 @@ class MapState extends State<MapWindow> {
     Marker WalkerHallmarker = Marker(
         markerId: MarkerId("WJWH"),
         position: LatLng(36.06535, -94.17343),
+        infoWindow: InfoWindow(title: "Walker Hall"),
         // This is where the magic happens
         onTap: () {
           showDialog(
@@ -183,6 +185,7 @@ class MapState extends State<MapWindow> {
     Marker MechanicalENGmarker = Marker(
         markerId: MarkerId("MEEG"),
         position: LatLng(36.06639, -94.17290),
+        infoWindow: InfoWindow(title: "Mechanical Engineering"),
         // This is where the magic happens
         onTap: () {
           showDialog(
@@ -195,6 +198,7 @@ class MapState extends State<MapWindow> {
     Marker Physicsmarker = Marker(
         markerId: MarkerId("PHYS"),
         position: LatLng(36.06641, -94.17185),
+        infoWindow: InfoWindow(title: "Physics Building"),
         // This is where the magic happens
         onTap: () {
           showDialog(
@@ -207,6 +211,7 @@ class MapState extends State<MapWindow> {
     Marker ChampionsHallmarker = Marker(
         markerId: MarkerId("CHPN"),
         position: LatLng(36.06581, -94.17135),
+        infoWindow: InfoWindow(title: "Champions Hall"),
         // This is where the magic happens
         onTap: () {
           showDialog(
@@ -234,6 +239,12 @@ class MapState extends State<MapWindow> {
     // Marker resources: https://stackoverflow.com/questions/55000043/flutter-how-to-add-marker-to-google-maps-with-new-marker-api
     return Scaffold(
         body: GoogleMap(
+      onTap: (newCoordinate) {},
+      onMapCreated: (mapController) {
+        mapController.showMarkerInfoWindow(MarkerId("JBHT"));
+        mapController.showMarkerInfoWindow(MarkerId("CHPN"));
+        //mapController.showMarkerInfoWindow(MarkerId("WJWH"));
+      },
       myLocationButtonEnabled: false,
       zoomControlsEnabled: false,
       initialCameraPosition: _initialPos,
