@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'widgets/nav-drawer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -151,7 +152,11 @@ class MapSampleState extends State<MapSample> {
         body: GoogleMap(
       myLocationButtonEnabled: false,
       zoomControlsEnabled: false,
-      initialCameraPosition: _initialPos,
-    ));
+      initialCameraPosition: _initialPos,),
+        drawer: NavDrawer(),
+        appBar: AppBar(
+          title: Text('Campus Map'),
+    )
+    );
   }
 }
