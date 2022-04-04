@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'widgets/nav-drawer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -239,17 +240,21 @@ class MapState extends State<MapWindow> {
     // Marker resources: https://stackoverflow.com/questions/55000043/flutter-how-to-add-marker-to-google-maps-with-new-marker-api
     return Scaffold(
         body: GoogleMap(
-      onTap: (newCoordinate) {},
-      onMapCreated: (mapController) {
-        mapController.showMarkerInfoWindow(MarkerId("JBHT"));
-        mapController.showMarkerInfoWindow(MarkerId("CHPN"));
-        //mapController.showMarkerInfoWindow(MarkerId("WJWH"));
-      },
-      myLocationButtonEnabled: false,
-      zoomControlsEnabled: false,
-      initialCameraPosition: _initialPos,
-      markers: markers.map((e) => e).toSet(),
-    ));
+          onTap: (newCoordinate) {},
+          onMapCreated: (mapController) {
+            mapController.showMarkerInfoWindow(MarkerId("JBHT"));
+            mapController.showMarkerInfoWindow(MarkerId("CHPN"));
+            //mapController.showMarkerInfoWindow(MarkerId("WJWH"));
+          },
+          myLocationButtonEnabled: false,
+          zoomControlsEnabled: false,
+          initialCameraPosition: _initialPos,
+          markers: markers.map((e) => e).toSet(),
+        ),
+        drawer: NavDrawer(),
+        appBar: AppBar(
+          title: Text('Campus Map'),
+        ));
   }
 }
 
