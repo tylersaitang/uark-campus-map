@@ -166,7 +166,10 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(context),
+            builder: (BuildContext context) => buildPopupDialog(
+                context,
+                'assets/images/woopig.png',
+                "Welcome to the JBHunt Center For Excellence!"),
           );
         });
 
@@ -179,7 +182,8 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(context),
+            builder: (BuildContext context) => buildPopupDialog(context,
+                'assets/images/woopig.png', "Welcome to WJ Walker Hall!"),
           );
         });
 
@@ -192,7 +196,10 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(context),
+            builder: (BuildContext context) => buildPopupDialog(
+                context,
+                'assets/images/woopig.png',
+                "Welcome to the Mechanical Engineering Building!"),
           );
         });
 
@@ -205,7 +212,10 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(context),
+            builder: (BuildContext context) => buildPopupDialog(
+                context,
+                'assets/images/woopig.png',
+                "Welcome to the JBHunt Center For Excellence!"),
           );
         });
 
@@ -218,7 +228,8 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(context),
+            builder: (BuildContext context) => buildPopupDialog(context,
+                'assets/images/woopig.png', "Welcome to Champion's Hall!"),
           );
         });
 
@@ -244,7 +255,8 @@ class MapState extends State<MapWindow> {
           onMapCreated: (mapController) {
             mapController.showMarkerInfoWindow(MarkerId("JBHT"));
             mapController.showMarkerInfoWindow(MarkerId("CHPN"));
-            //mapController.showMarkerInfoWindow(MarkerId("WJWH"));
+            mapController.showMarkerInfoWindow(MarkerId("WJWH"));
+            mapController.showMarkerInfoWindow(MarkerId("CHPN"));
           },
           myLocationButtonEnabled: false,
           zoomControlsEnabled: false,
@@ -258,14 +270,17 @@ class MapState extends State<MapWindow> {
   }
 }
 
-Widget buildPopupDialog(BuildContext context) {
+// Function to build the popup layouts for each building
+Widget buildPopupDialog(
+    BuildContext context, String mapImage, String popupDialog) {
   return AlertDialog(
-    title: const Text('Popup example'),
+    title: Text('Popup example'),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const <Widget>[
-        Text("Hello"),
+      children: <Widget>[
+        Text(popupDialog),
+        Image.asset(mapImage),
       ],
     ),
     actions: <Widget>[
