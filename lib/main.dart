@@ -148,11 +148,14 @@ class MapState extends State<MapWindow> {
 
   @override
   void initState() {
-    intilize();
+    intialize();
     super.initState();
   }
 
-  intilize() {
+  // Initialize creates the Marker objects present on the map, and updates the state of the map afterwards
+  // This method constructs markers and calls the method to build an on-click information window
+  // using buildFloorPage
+  intialize() {
     // Quick info dump on Markers:
     // Markers are constructed using Marker objects
     // They require a MarkerId, an object initialized by a String
@@ -228,8 +231,20 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(context,
-                'assets/images/woopig.png', "Welcome to Champion's Hall!"),
+            builder: (BuildContext context) =>
+                buildFloorPage(context, "Champions Hall CHMP", [
+              "1",
+              "2",
+              "3"
+            ], [
+              'assets/images/woopig.png',
+              'assets/images/woopig.png',
+              'assets/images/woopig.png'
+            ], [
+              "This is an example",
+              "This is the second floor featuring bagel shop",
+              "this is admin floor"
+            ]),
           );
         });
 
@@ -264,20 +279,17 @@ class MapState extends State<MapWindow> {
           markers: markers.map((e) => e).toSet(),
         ),
         drawer: NavDrawer(),
-        appBar: AppBar(
-          title: Text('Campus Map'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: (){
-                showSearch(
-                  context: context,
-                  delegate: MySearchDelegate(),
-                );
-              },
-            )
-          ]
-        ));
+        appBar: AppBar(title: Text('Campus Map'), actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: MySearchDelegate(),
+              );
+            },
+          )
+        ]));
   }
 }
 
@@ -292,15 +304,13 @@ class MySearchDelegate extends SearchDelegate {
   ];
 
   @override
-  Widget? buildLeading(BuildContext context) =>
-      IconButton(
+  Widget? buildLeading(BuildContext context) => IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () => close(context, null), //close searchbar
       );
 
   @override
-  List<Widget>? buildActions(BuildContext context) =>
-      [
+  List<Widget>? buildActions(BuildContext context) => [
         IconButton(
           icon: const Icon(Icons.clear),
           onPressed: () {
@@ -315,11 +325,8 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) => Center(
-        child: Text(
-          query,
-          style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold)
-        )
-      );
+      child: Text(query,
+          style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold)));
 
   @override
   Widget buildSuggestions(BuildContext context) {
@@ -346,14 +353,56 @@ class MySearchDelegate extends SearchDelegate {
       },
     );
   }
+}
 
+// Build each individual page for the page view
+// Takes a floor title, map URL, and description for the floor
+Widget buildFloorWidget(String floor, String map, String desc) {
+  return Scaffold(
+      body: Center(
+          child: Column(children: <Widget>[
+    Text(floor),
+    SizedBox(height: 10),
+    Image.asset(map),
+    SizedBox(height: 10),
+    Text(desc),
+  ])));
+}
+
+// Function to build a Pageview for a building
+// Pageviews will allow the user to open a new page to observe the building
+// layout, floor number, and a description of the floor
+// buildFloorPage will call buildFloorWidget to create each floor's data
+//
+// Takes a context, a title for the page, a list of floor numbers, a list of map URLs, and a list of descriptions.
+// Pages will be built per floor, so all arrays must be >= length of floors
+Widget buildFloorPage(BuildContext context, String building,
+    List<String> floors, List<String> maps, List<String> desc) {
+  // Controller decides which page to open the view on
+  PageController controller = PageController(initialPage: 0);
+
+  List<Widget> floorPages = <Widget>[];
+  for (int i = 0; i < floors.length; i++) {
+    floorPages.add(buildFloorWidget(floors[i], maps[i], desc[i]));
+  }
+
+  return Scaffold(
+      appBar: AppBar(
+        title: Text(building),
+      ),
+      body: PageView(
+        controller: controller,
+        scrollDirection: Axis.vertical,
+        children: floorPages,
+      ));
 }
 
 // Function to build the popup layouts for each building
+// ----- DEPRECIATED -----
 Widget buildPopupDialog(
     BuildContext context, String mapImage, String popupDialog) {
   return AlertDialog(
-    title: Text('Popup example'),
+    title: Text('Building Information'),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
