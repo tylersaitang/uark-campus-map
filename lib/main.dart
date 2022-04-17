@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'widgets/nav-drawer.dart';
+import 'widgets/Building.dart';
 
 void main() {
   runApp(const MyApp());
@@ -141,10 +142,13 @@ class MapWindow extends StatefulWidget {
   State<MapWindow> createState() => MapState();
 }
 
+
+
 class MapState extends State<MapWindow> {
   Completer<GoogleMapController> _controller = Completer();
 
   List<Marker> markers = [];
+  List<Building> buildings = [];
 
   @override
   void initState() {
@@ -160,7 +164,9 @@ class MapState extends State<MapWindow> {
     // Markers are constructed using Marker objects
     // They require a MarkerId, an object initialized by a String
     // They have a long list of contructor options: https://pub.dev/documentation/google_maps_flutter_platform_interface/latest/google_maps_flutter_platform_interface/Marker/Marker.html
-    Marker JBHUNTmarker = Marker(
+    
+    // Add markers and buildings to the map's state
+    markers.add(Marker(
         markerId: MarkerId("JBHT"),
         position: LatLng(36.066082, -94.173786),
         infoWindow: InfoWindow(title: "JB Hunt"),
@@ -174,9 +180,10 @@ class MapState extends State<MapWindow> {
                 'assets/images/woopig.png',
                 "Welcome to the JBHunt Center For Excellence!"),
           );
-        });
+        }));
+    buildings.add(Building("JBHT", 36.066082, -94.173786));
 
-    Marker WalkerHallmarker = Marker(
+    markers.add(Marker(
         markerId: MarkerId("WJWH"),
         position: LatLng(36.06535, -94.17343),
         infoWindow: InfoWindow(title: "Walker Hall"),
@@ -188,9 +195,10 @@ class MapState extends State<MapWindow> {
             builder: (BuildContext context) => buildPopupDialog(context,
                 'assets/images/woopig.png', "Welcome to WJ Walker Hall!"),
           );
-        });
+        }));
+      buildings.add(Building("WJWH", 36.06535, -94.17343));
 
-    Marker MechanicalENGmarker = Marker(
+    markers.add(Marker(
         markerId: MarkerId("MEEG"),
         position: LatLng(36.06639, -94.17290),
         infoWindow: InfoWindow(title: "Mechanical Engineering"),
@@ -204,9 +212,10 @@ class MapState extends State<MapWindow> {
                 'assets/images/woopig.png',
                 "Welcome to the Mechanical Engineering Building!"),
           );
-        });
+        }));
+    buildings.add(Building("MEEG", 36.06639, -94.17290));
 
-    Marker Physicsmarker = Marker(
+    markers.add(Marker(
         markerId: MarkerId("PHYS"),
         position: LatLng(36.06641, -94.17185),
         infoWindow: InfoWindow(title: "Physics Building"),
@@ -220,9 +229,10 @@ class MapState extends State<MapWindow> {
                 'assets/images/woopig.png',
                 "Welcome to the JBHunt Center For Excellence!"),
           );
-        });
+        }));
+    buildings.add(Building("PHYS", 36.06641, -94.17185));
 
-    Marker ChampionsHallmarker = Marker(
+    markers.add(Marker(
         markerId: MarkerId("CHPN"),
         position: LatLng(36.06581, -94.17135),
         infoWindow: InfoWindow(title: "Champions Hall"),
@@ -246,13 +256,8 @@ class MapState extends State<MapWindow> {
               "this is admin floor"
             ]),
           );
-        });
-
-    markers.add(JBHUNTmarker);
-    markers.add(WalkerHallmarker);
-    markers.add(MechanicalENGmarker);
-    markers.add(Physicsmarker);
-    markers.add(ChampionsHallmarker);
+        }));
+    buildings.add(Building("CHPN", 36.06581, -94.17135));
     setState(() {});
   }
 
