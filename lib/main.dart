@@ -142,8 +142,6 @@ class MapWindow extends StatefulWidget {
   State<MapWindow> createState() => MapState();
 }
 
-
-
 class MapState extends State<MapWindow> {
   Completer<GoogleMapController> _controller = Completer();
 
@@ -164,7 +162,7 @@ class MapState extends State<MapWindow> {
     // Markers are constructed using Marker objects
     // They require a MarkerId, an object initialized by a String
     // They have a long list of contructor options: https://pub.dev/documentation/google_maps_flutter_platform_interface/latest/google_maps_flutter_platform_interface/Marker/Marker.html
-    
+
     // Add markers and buildings to the map's state
     markers.add(Marker(
         markerId: MarkerId("JBHT"),
@@ -196,7 +194,7 @@ class MapState extends State<MapWindow> {
                 'assets/images/woopig.png', "Welcome to WJ Walker Hall!"),
           );
         }));
-      buildings.add(Building("WJWH", 36.06535, -94.17343));
+    buildings.add(Building("WJWH", 36.06535, -94.17343));
 
     markers.add(Marker(
         markerId: MarkerId("MEEG"),

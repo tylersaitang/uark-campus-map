@@ -19,24 +19,9 @@ class NavDrawer extends StatelessWidget {
                     image: AssetImage('assets/images/cover.jpg'))),
           ),
           ListTile(
-            leading: Icon(Icons.input),
-            title: Text('Welcome'),
-            onTap: () => {},
-          ),
-          ListTile(
-            leading: Icon(Icons.verified_user),
-            title: Text('Interior View'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: Icon(Icons.border_color),
-            title: Text('Building List'),
-            onTap: () => {Navigator.of(context).pop()},
+            leading: const Icon(Icons.search),
+            title: Text('Search For a Building By Code'),
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.exit_to_app),
