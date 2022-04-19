@@ -173,10 +173,26 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(
-                context,
-                'assets/images/woopig.png',
-                "Welcome to the JBHunt Center For Excellence!"),
+            builder: (BuildContext context) =>
+                buildFloorPage(context, "JB Hunt JBHT", [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ], [
+              'assets/images/JBHuntFloor1.png',
+              'assets/images/JBHuntFloor2.png',
+              'assets/images/JBHuntFloor3.png',
+              'assets/images/JBHuntFloor4.png',
+              'assets/images/JBHuntFloor5.png'
+            ], [
+              "First Floor of JB Hunt",
+              "Second Floor of JB Hunt",
+              "Third Floor of JB Hunt",
+              "Fourth Floor of JB Hunt",
+              "Fifth Floor of JB Hunt",
+            ]),
           );
         }));
     buildings.add(Building("JBHT", 36.066082, -94.173786));
@@ -190,8 +206,26 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(context,
-                'assets/images/woopig.png', "Welcome to WJ Walker Hall!"),
+            builder: (BuildContext context) =>
+                buildFloorPage(context, "Walker Hall WJWH", [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ], [
+              'assets/images/WJWHFloor1.png',
+              'assets/images/WJWHFloor2.png',
+              'assets/images/WJWHFloor3.png',
+              'assets/images/WJWHFloor4.png',
+              'assets/images/WJWHFloor5.png'
+            ], [
+              "First Floor of Walker Hall",
+              "Second Floor of Walker Hall",
+              "Third Floor of Walker Hall",
+              "Fourth Floor of Walker Hall",
+              "Fifth Floor of Walker Hall",
+            ]),
           );
         }));
     buildings.add(Building("WJWH", 36.06535, -94.17343));
@@ -243,15 +277,18 @@ class MapState extends State<MapWindow> {
                 buildFloorPage(context, "Champions Hall CHMP", [
               "1",
               "2",
-              "3"
+              "3",
+              "4"
             ], [
-              'assets/images/woopig.png',
-              'assets/images/woopig.png',
-              'assets/images/woopig.png'
+              'assets/images/ChampionsFloor1.png',
+              'assets/images/ChampionsFloor2.png',
+              'assets/images/ChampionsFloor3.png',
+              'assets/images/ChampionsFloor4.png',
             ], [
-              "This is an example",
-              "This is the second floor featuring bagel shop",
-              "this is admin floor"
+              "First Floor of Champions Hall",
+              "Second Floor of Champions Hall",
+              "Third Floor of Champions Hall",
+              "Fourth Floor of Champions Hall"
             ]),
           );
         }));
