@@ -175,11 +175,11 @@ class MapState extends State<MapWindow> {
             context: context,
             builder: (BuildContext context) =>
                 buildFloorPage(context, "JB Hunt JBHT", [
-              "1",
-              "2",
-              "3",
-              "4",
-              "5"
+              "First Floor of JB Hunt",
+              "Second Floor of JB Hunt",
+              "Third Floor of JB Hunt",
+              "Fourth Floor of JB Hunt",
+              "Fifth Floor of JB Hunt"
             ], [
               'assets/images/JBHuntFloor1.png',
               'assets/images/JBHuntFloor2.png',
@@ -187,11 +187,11 @@ class MapState extends State<MapWindow> {
               'assets/images/JBHuntFloor4.png',
               'assets/images/JBHuntFloor5.png'
             ], [
-              "First Floor of JB Hunt",
-              "Second Floor of JB Hunt",
-              "Third Floor of JB Hunt",
-              "Fourth Floor of JB Hunt",
-              "Fifth Floor of JB Hunt",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
             ]),
           );
         }));
@@ -200,7 +200,7 @@ class MapState extends State<MapWindow> {
     markers.add(Marker(
         markerId: MarkerId("WJWH"),
         position: LatLng(36.06535, -94.17343),
-        infoWindow: InfoWindow(title: "Walker Hall"),
+        infoWindow: InfoWindow(title: "Walker Hall WJWH"),
         // This is where the magic happens
         onTap: () {
           showDialog(
@@ -208,11 +208,11 @@ class MapState extends State<MapWindow> {
             context: context,
             builder: (BuildContext context) =>
                 buildFloorPage(context, "Walker Hall WJWH", [
-              "1",
-              "2",
-              "3",
-              "4",
-              "5"
+              "First Floor of Walker Hall",
+              "Second Floor of Walker Hall",
+              "Third Floor of Walker Hall",
+              "Fourth Floor of Walker Hall",
+              "Fifth Floor of Walker Hall"
             ], [
               'assets/images/WJWHFloor1.png',
               'assets/images/WJWHFloor2.png',
@@ -220,11 +220,11 @@ class MapState extends State<MapWindow> {
               'assets/images/WJWHFloor4.png',
               'assets/images/WJWHFloor5.png'
             ], [
-              "First Floor of Walker Hall",
-              "Second Floor of Walker Hall",
-              "Third Floor of Walker Hall",
-              "Fourth Floor of Walker Hall",
-              "Fifth Floor of Walker Hall",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
             ]),
           );
         }));
@@ -233,16 +233,23 @@ class MapState extends State<MapWindow> {
     markers.add(Marker(
         markerId: MarkerId("MEEG"),
         position: LatLng(36.06639, -94.17290),
-        infoWindow: InfoWindow(title: "Mechanical Engineering"),
+        infoWindow: InfoWindow(title: "Mechanical Engineering MEEG"),
         // This is where the magic happens
         onTap: () {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(
-                context,
-                'assets/images/woopig.png',
-                "Welcome to the Mechanical Engineering Building!"),
+            builder: (BuildContext context) =>
+                buildFloorPage(context, "Mechanical Engineering MEEG", [
+              "First Floor of Mechanical Engineering Hall",
+              "Second Floor of Mechanical Engineering Hall"
+            ], [
+              'assets/images/MEEGFloor1.png',
+              'assets/images/MEEGFloor2.png'
+            ], [
+              "1",
+              "2"
+            ]),
           );
         }));
     buildings.add(Building("MEEG", 36.06639, -94.17290));
@@ -256,10 +263,22 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(
-                context,
-                'assets/images/woopig.png',
-                "Welcome to the JBHunt Center For Excellence!"),
+            builder: (BuildContext context) =>
+                buildFloorPage(context, "Physics Building PHYS", [
+              "First Floor of Physics Building",
+              "Second Floor of Physics Building",
+              "Third Floor of Physics Building"
+            ], [
+              'assets/images/PHYSFloor1.png',
+              'assets/images/PHYSFloor2.png',
+              'assets/images/PHYSFloorBasement.png'
+            ], [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ]),
           );
         }));
     buildings.add(Building("PHYS", 36.06641, -94.17185));
@@ -274,21 +293,21 @@ class MapState extends State<MapWindow> {
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
             builder: (BuildContext context) =>
-                buildFloorPage(context, "Champions Hall CHMP", [
-              "1",
-              "2",
-              "3",
-              "4"
+                buildFloorPage(context, "Champions Hall CHPN", [
+              "First Floor of Champions Hall",
+              "Second Floor of Champions Hall",
+              "Third Floor of Champions Hall",
+              "Fourth Floor of Champions Hall"
             ], [
               'assets/images/ChampionsFloor1.png',
               'assets/images/ChampionsFloor2.png',
               'assets/images/ChampionsFloor3.png',
               'assets/images/ChampionsFloor4.png',
             ], [
-              "First Floor of Champions Hall",
-              "Second Floor of Champions Hall",
-              "Third Floor of Champions Hall",
-              "Fourth Floor of Champions Hall"
+              "1",
+              "2",
+              "3",
+              "4"
             ]),
           );
         }));
@@ -308,10 +327,13 @@ class MapState extends State<MapWindow> {
         body: GoogleMap(
           onTap: (newCoordinate) {},
           onMapCreated: (mapController) {
-            mapController.showMarkerInfoWindow(MarkerId("JBHT"));
-            mapController.showMarkerInfoWindow(MarkerId("CHPN"));
-            mapController.showMarkerInfoWindow(MarkerId("WJWH"));
-            mapController.showMarkerInfoWindow(MarkerId("CHPN"));
+            [
+              mapController.showMarkerInfoWindow(MarkerId("JBHT")),
+              mapController.showMarkerInfoWindow(MarkerId("CHPN")),
+              mapController.showMarkerInfoWindow(MarkerId("WJWH")),
+              mapController.showMarkerInfoWindow(MarkerId("PHYS")),
+              mapController.showMarkerInfoWindow(MarkerId("MEEG"))
+            ];
           },
           myLocationButtonEnabled: false,
           zoomControlsEnabled: false,
@@ -428,7 +450,7 @@ Widget buildFloorPage(BuildContext context, String building,
 
   return Scaffold(
       appBar: AppBar(
-        title: Text(building),
+        title: Text("Swipe Up or Down to See The Next Floor"),
       ),
       body: PageView(
         controller: controller,

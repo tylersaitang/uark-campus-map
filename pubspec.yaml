@@ -75,6 +75,12 @@ flutter:
      - assets/images/JBHuntFloor3.png
      - assets/images/JBHuntFloor4.png
      - assets/images/JBHuntFloor5.png
+     - assets/images/MEEGFloor1.png
+     - assets/images/MEEGFloor2.png
+     - assets/images/PHYSFloor1.png
+     - assets/images/PHYSFloor2.png
+     - assets/images/PHYSFloorBasement.png
+     - assets/images/WJWHFloor1.png
      - assets/images/WJWHFloor1.png
      - assets/images/WJWHFloor2.png
      - assets/images/WJWHFloor3.png
