@@ -428,7 +428,7 @@ Widget buildFloorPage(BuildContext context, String building,
 
   return Scaffold(
       appBar: AppBar(
-        title: Text(building),
+        title: Text("Swipe Up or Down to See The Next Floor"),
       ),
       body: PageView(
         controller: controller,
