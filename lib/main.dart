@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'widgets/nav-drawer.dart';
+import 'widgets/Building.dart';
 
 void main() {
   runApp(const MyApp());
@@ -145,19 +146,25 @@ class MapState extends State<MapWindow> {
   Completer<GoogleMapController> _controller = Completer();
 
   List<Marker> markers = [];
+  List<Building> buildings = [];
 
   @override
   void initState() {
-    intilize();
+    intialize();
     super.initState();
   }
 
-  intilize() {
+  // Initialize creates the Marker objects present on the map, and updates the state of the map afterwards
+  // This method constructs markers and calls the method to build an on-click information window
+  // using buildFloorPage
+  intialize() {
     // Quick info dump on Markers:
     // Markers are constructed using Marker objects
     // They require a MarkerId, an object initialized by a String
     // They have a long list of contructor options: https://pub.dev/documentation/google_maps_flutter_platform_interface/latest/google_maps_flutter_platform_interface/Marker/Marker.html
-    Marker JBHUNTmarker = Marker(
+
+    // Add markers and buildings to the map's state
+    markers.add(Marker(
         markerId: MarkerId("JBHT"),
         position: LatLng(36.066082, -94.173786),
         infoWindow: InfoWindow(title: "JB Hunt"),
@@ -166,44 +173,88 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(
-                context,
-                'assets/images/woopig.png',
-                "Welcome to the JBHunt Center For Excellence!"),
+            builder: (BuildContext context) =>
+                buildFloorPage(context, "JB Hunt JBHT", [
+              "First Floor of JB Hunt",
+              "Second Floor of JB Hunt",
+              "Third Floor of JB Hunt",
+              "Fourth Floor of JB Hunt",
+              "Fifth Floor of JB Hunt"
+            ], [
+              'assets/images/JBHuntFloor1.png',
+              'assets/images/JBHuntFloor2.png',
+              'assets/images/JBHuntFloor3.png',
+              'assets/images/JBHuntFloor4.png',
+              'assets/images/JBHuntFloor5.png'
+            ], [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ]),
           );
-        });
+        }));
+    buildings.add(Building("JBHT", 36.066082, -94.173786));
 
-    Marker WalkerHallmarker = Marker(
+    markers.add(Marker(
         markerId: MarkerId("WJWH"),
         position: LatLng(36.06535, -94.17343),
-        infoWindow: InfoWindow(title: "Walker Hall"),
+        infoWindow: InfoWindow(title: "Walker Hall WJWH"),
         // This is where the magic happens
         onTap: () {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(context,
-                'assets/images/woopig.png', "Welcome to WJ Walker Hall!"),
+            builder: (BuildContext context) =>
+                buildFloorPage(context, "Walker Hall WJWH", [
+              "First Floor of Walker Hall",
+              "Second Floor of Walker Hall",
+              "Third Floor of Walker Hall",
+              "Fourth Floor of Walker Hall",
+              "Fifth Floor of Walker Hall"
+            ], [
+              'assets/images/WJWHFloor1.png',
+              'assets/images/WJWHFloor2.png',
+              'assets/images/WJWHFloor3.png',
+              'assets/images/WJWHFloor4.png',
+              'assets/images/WJWHFloor5.png'
+            ], [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ]),
           );
-        });
+        }));
+    buildings.add(Building("WJWH", 36.06535, -94.17343));
 
-    Marker MechanicalENGmarker = Marker(
+    markers.add(Marker(
         markerId: MarkerId("MEEG"),
         position: LatLng(36.06639, -94.17290),
-        infoWindow: InfoWindow(title: "Mechanical Engineering"),
+        infoWindow: InfoWindow(title: "Mechanical Engineering MEEG"),
         // This is where the magic happens
         onTap: () {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(
-                context,
-                'assets/images/woopig.png',
-                "Welcome to the Mechanical Engineering Building!"),
+            builder: (BuildContext context) =>
+                buildFloorPage(context, "Mechanical Engineering MEEG", [
+              "First Floor of Mechanical Engineering Hall",
+              "Second Floor of Mechanical Engineering Hall"
+            ], [
+              'assets/images/MEEGFloor1.png',
+              'assets/images/MEEGFloor2.png'
+            ], [
+              "1",
+              "2"
+            ]),
           );
-        });
+        }));
+    buildings.add(Building("MEEG", 36.06639, -94.17290));
 
-    Marker Physicsmarker = Marker(
+    markers.add(Marker(
         markerId: MarkerId("PHYS"),
         position: LatLng(36.06641, -94.17185),
         infoWindow: InfoWindow(title: "Physics Building"),
@@ -212,14 +263,27 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(
-                context,
-                'assets/images/woopig.png',
-                "Welcome to the JBHunt Center For Excellence!"),
+            builder: (BuildContext context) =>
+                buildFloorPage(context, "Physics Building PHYS", [
+              "First Floor of Physics Building",
+              "Second Floor of Physics Building",
+              "Third Floor of Physics Building"
+            ], [
+              'assets/images/PHYSFloor1.png',
+              'assets/images/PHYSFloor2.png',
+              'assets/images/PHYSFloorBasement.png'
+            ], [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ]),
           );
-        });
+        }));
+    buildings.add(Building("PHYS", 36.06641, -94.17185));
 
-    Marker ChampionsHallmarker = Marker(
+    markers.add(Marker(
         markerId: MarkerId("CHPN"),
         position: LatLng(36.06581, -94.17135),
         infoWindow: InfoWindow(title: "Champions Hall"),
@@ -228,16 +292,26 @@ class MapState extends State<MapWindow> {
           showDialog(
             // Get context from parent widget and builder is the buildpopupDialog method
             context: context,
-            builder: (BuildContext context) => buildPopupDialog(context,
-                'assets/images/woopig.png', "Welcome to Champion's Hall!"),
+            builder: (BuildContext context) =>
+                buildFloorPage(context, "Champions Hall CHPN", [
+              "First Floor of Champions Hall",
+              "Second Floor of Champions Hall",
+              "Third Floor of Champions Hall",
+              "Fourth Floor of Champions Hall"
+            ], [
+              'assets/images/ChampionsFloor1.png',
+              'assets/images/ChampionsFloor2.png',
+              'assets/images/ChampionsFloor3.png',
+              'assets/images/ChampionsFloor4.png',
+            ], [
+              "1",
+              "2",
+              "3",
+              "4"
+            ]),
           );
-        });
-
-    markers.add(JBHUNTmarker);
-    markers.add(WalkerHallmarker);
-    markers.add(MechanicalENGmarker);
-    markers.add(Physicsmarker);
-    markers.add(ChampionsHallmarker);
+        }));
+    buildings.add(Building("CHPN", 36.06581, -94.17135));
     setState(() {});
   }
 
@@ -253,10 +327,13 @@ class MapState extends State<MapWindow> {
         body: GoogleMap(
           onTap: (newCoordinate) {},
           onMapCreated: (mapController) {
-            mapController.showMarkerInfoWindow(MarkerId("JBHT"));
-            mapController.showMarkerInfoWindow(MarkerId("CHPN"));
-            mapController.showMarkerInfoWindow(MarkerId("WJWH"));
-            mapController.showMarkerInfoWindow(MarkerId("CHPN"));
+            [
+              mapController.showMarkerInfoWindow(MarkerId("JBHT")),
+              mapController.showMarkerInfoWindow(MarkerId("CHPN")),
+              mapController.showMarkerInfoWindow(MarkerId("WJWH")),
+              mapController.showMarkerInfoWindow(MarkerId("PHYS")),
+              mapController.showMarkerInfoWindow(MarkerId("MEEG"))
+            ];
           },
           myLocationButtonEnabled: false,
           zoomControlsEnabled: false,
@@ -264,20 +341,17 @@ class MapState extends State<MapWindow> {
           markers: markers.map((e) => e).toSet(),
         ),
         drawer: NavDrawer(),
-        appBar: AppBar(
-          title: Text('Campus Map'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: (){
-                showSearch(
-                  context: context,
-                  delegate: MySearchDelegate(),
-                );
-              },
-            )
-          ]
-        ));
+        appBar: AppBar(title: Text('Campus Map'), actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: MySearchDelegate(),
+              );
+            },
+          )
+        ]));
   }
 }
 
@@ -292,15 +366,13 @@ class MySearchDelegate extends SearchDelegate {
   ];
 
   @override
-  Widget? buildLeading(BuildContext context) =>
-      IconButton(
+  Widget? buildLeading(BuildContext context) => IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () => close(context, null), //close searchbar
       );
 
   @override
-  List<Widget>? buildActions(BuildContext context) =>
-      [
+  List<Widget>? buildActions(BuildContext context) => [
         IconButton(
           icon: const Icon(Icons.clear),
           onPressed: () {
@@ -315,11 +387,8 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) => Center(
-        child: Text(
-          query,
-          style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold)
-        )
-      );
+      child: Text(query,
+          style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold)));
 
   @override
   Widget buildSuggestions(BuildContext context) {
@@ -346,14 +415,56 @@ class MySearchDelegate extends SearchDelegate {
       },
     );
   }
+}
 
+// Build each individual page for the page view
+// Takes a floor title, map URL, and description for the floor
+Widget buildFloorWidget(String floor, String map, String desc) {
+  return Scaffold(
+      body: Center(
+          child: Column(children: <Widget>[
+    Text(floor),
+    SizedBox(height: 10),
+    Image.asset(map),
+    SizedBox(height: 10),
+    Text(desc),
+  ])));
+}
+
+// Function to build a Pageview for a building
+// Pageviews will allow the user to open a new page to observe the building
+// layout, floor number, and a description of the floor
+// buildFloorPage will call buildFloorWidget to create each floor's data
+//
+// Takes a context, a title for the page, a list of floor numbers, a list of map URLs, and a list of descriptions.
+// Pages will be built per floor, so all arrays must be >= length of floors
+Widget buildFloorPage(BuildContext context, String building,
+    List<String> floors, List<String> maps, List<String> desc) {
+  // Controller decides which page to open the view on
+  PageController controller = PageController(initialPage: 0);
+
+  List<Widget> floorPages = <Widget>[];
+  for (int i = 0; i < floors.length; i++) {
+    floorPages.add(buildFloorWidget(floors[i], maps[i], desc[i]));
+  }
+
+  return Scaffold(
+      appBar: AppBar(
+        title: Text("Swipe Up or Down to See The Next Floor"),
+      ),
+      body: PageView(
+        controller: controller,
+        scrollDirection: Axis.vertical,
+        children: floorPages,
+      ));
 }
 
 // Function to build the popup layouts for each building
+// ----- DEPRECIATED -----
 Widget buildPopupDialog(
     BuildContext context, String mapImage, String popupDialog) {
   return AlertDialog(
-    title: Text('Popup example'),
+    title: Text('Building Information'),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
